@@ -1,8 +1,8 @@
 image_amount = 24;    // Ugly, but no time to fix
 var images;
 var pos = [];
-var angle = 0;
-var keys = [false, false, false, false];
+var angle = 1;
+var keys = [false, false, false, false];  // up, left, down and right arrow
 var speed = 4;
 var image_seperation = -4;
 var display_modus = false;
@@ -10,8 +10,8 @@ var display_modus = false;
 function preload() {
   images = [];
   for (var i = 0; i <= image_amount; i++) {
-    if (i < 10) { img = loadImage('images/sprite_0' + i + '.png');}
-    else {        img = loadImage('images/sprite_' + i + '.png');}
+    if (i < 10) { img = loadImage('images/sprite_0' + i + '.png');} // absolutely
+    else {        img = loadImage('images/sprite_' + i + '.png');}  // beautiful
     images.push(img);
   }
   console.log("Preloaded images.")
@@ -20,7 +20,7 @@ function preload() {
 function setup() {
   imageMode(CENTER);
   createCanvas(800, 800)
-  pos = [100, 100];
+  pos = [300, 300];
   textSize(32);
 }
 
