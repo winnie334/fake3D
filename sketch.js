@@ -48,6 +48,13 @@ function draw() {
     image(images[i], 0, 0);
     rotate(-angle);
   }
+
+  // TODO: calculate relative x- and y-size of car, use it instead of offset
+  var offset = 40;
+  if (pos[0] > width + offset) { pos[0] = offset; }
+  else if (pos[0] < -offset) { pos[0] = width - offset}
+  if (pos[1] > height+ offset) { pos[1] = offset; }
+  else if (pos[1] < -offset) { pos[1] = height - offset}
 }
 
 function handleKeyInput() {
