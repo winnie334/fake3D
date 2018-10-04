@@ -27,7 +27,16 @@ function setup() {
 function draw() {
   clear();
   background(240);
+
+  textAlign(LEFT);
   text("Controls: ←↑→ and ␣", 20, height - 30)
+
+  textAlign(RIGHT);
+  if (!display_modus) {
+    text("Driving mode", width - 20, height - 30)
+  } else {
+    text("Expanding mode", width - 20, height - 30)
+  }
 
   handleKeyInput();
 
