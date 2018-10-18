@@ -29,7 +29,7 @@ function draw() {
   background(240);
 
   textAlign(LEFT);
-  text("Controls: ←↑→ and ␣", 20, height - 30)
+  text("Controls: ←↑→ , ␣ and B", 20, height - 30)
 
   textAlign(RIGHT);
   if (!display_modus) {
@@ -156,6 +156,8 @@ function keyPressed() {
     keys[2] = true;
   } else if (keyCode === 32) {  // space
     display_modus = !display_modus;
+  } else if (keyCode === 66) {
+	honk();  
   }
 }
 
@@ -169,4 +171,9 @@ function keyReleased() {
   } else if (keyCode === DOWN_ARROW) {
     keys[2] = false;
   }
+}
+
+function honk() { //Simple function for car honking
+	var audio = new Audio('car_horn.mp3');
+	audio.play();
 }
