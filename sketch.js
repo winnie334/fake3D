@@ -1,18 +1,23 @@
-image_amount = 24;    // Ugly, but no time to fix
+image_amount = 23;    // Ugly, but no time to fix
 var images;
 var pos = [];
-var angle = 0;
+var angle = -0.6;
 var keys = [false, false, false, false];  // up, left, down and right arrow
 var speed = 4;
-var image_seperation = -4;
+var image_seperation = -1.8;
+var image_duplication = 4;
+var show_duplicates = true;
 var display_modus = false;
 
 function preload() {
   images = [];
-  for (var i = 0; i <= image_amount; i++) {
-    if (i < 10) { img = loadImage('images/sprite_0' + i + '.png');} // absolutely
-    else {        img = loadImage('images/sprite_' + i + '.png');}  // beautiful
-    images.push(img);
+  for (var i = 1; i <= image_amount; i++) {
+    // if (i < 10) { img = loadImage('images/sprite_0' + i + '.png');} // absolutely
+    // else {        img = loadImage('images/sprite_' + i + '.png');}  // beautiful
+    img = loadImage('images/house' + i + '.png');
+    for (var j = 0; j < image_duplication; j++) {
+      images.push(img);
+    }
   }
   console.log("Preloaded images.")
 }
@@ -20,7 +25,7 @@ function preload() {
 function setup() {
   imageMode(CENTER);
   createCanvas(800, 800)
-  pos = [300, 300];
+  pos = [400, 400];
   textSize(32);
 }
 
@@ -40,93 +45,27 @@ function draw() {
 
   handleKeyInput();
 
-  translate(pos[0], pos[1] + 50);
-  push();
-  for (var i = 0; i <= image_amount; i++) {
+  translate(pos[0], pos[1]);
+  
+  for (var i = 0; i < images.length; i++) {
     translate(0, image_seperation);
-    push();
+    if (!show_duplicates && i % image_duplication != 0) continue;
     rotate(angle);
     image(images[i], 0, 0);
-    pop();
+    rotate(-angle);
   }
-  pop();
-
-  var w = 160;
-  var h = 120;
-  var r = sqrt(pow(w / 2, 2) + pow(h / 2, 2));
-  var theta = acos((w / 2) / r);
-
-  var x_coords = [
-    r * cos(theta - angle),
-    r * cos(-theta - angle),
-    r * cos(-PI + theta - angle),
-    r * cos(PI - theta - angle)
-  ];
-
-  var y_coords = [
-    -r * sin(theta - angle),
-    -r * sin(-theta - angle),
-    -r * sin(-PI + theta - angle),
-    -r * sin(PI - theta - angle)
-  ];
-
-  var edge = false;
-  var outside = 0;
-  var rel_pos = [0, 0];
-  for (x in x_coords) {
-    if (pos[0] + x_coords[x] < 0) {
-      rel_pos = [width, 0]
-      edge = true;
-      outside++;
-    } else if (pos[0] + x_coords[x] > width) {
-      rel_pos = [-width, 0]
-      edge = true;
-      outside++;
-    }
-  }
-
-  for (y in y_coords) {
-    if (pos[1] + y_coords[y] < 0) {
-      rel_pos = [0, height]
-      edge = true;
-      outside++;
-    } else if (pos[1] + y_coords[y] > height) {
-      rel_pos = [0, -height]
-      edge = true;
-      outside++;
-    }
-  }
-
-  if(edge) {
-    translate(rel_pos[0], rel_pos[1]);
-    push();
-    for (var i = 0; i <= image_amount; i++) {
-      translate(0, image_seperation);
-      push();
-      rotate(angle);
-      image(images[i], 0, 0);
-      pop();
-    }
-    pop();
-  }
-
-  if (outside == 4) {
-    if (pos[0] < 0) pos[0] += rel_pos[0];
-    if (pos[0] > width) pos[0] += rel_pos[0];
-    if (pos[1] < 0) pos[1] += rel_pos[1];
-    if (pos[1] > height) pos[1] += rel_pos[1];
-  }
+  
 }
 
 function handleKeyInput() {
   if (!display_modus) {
     if (keys[0]) {
-      pos[0] += cos(angle) * speed;
-      pos[1] += sin(angle) * speed;
+      pos[0] -= sin(angle) * speed;
+      pos[1] += cos(angle) * speed;
     }
     if (keys[2]) {
-      pos[0] -= cos(angle) * speed;
-      pos[1] -= sin(angle) * speed;
+      pos[0] += sin(angle) * speed;
+      pos[1] -= cos(angle) * speed;
     }
   } else {
     if (keys[0]) {
@@ -156,6 +95,8 @@ function keyPressed() {
     keys[2] = true;
   } else if (keyCode === 32) {  // space
     display_modus = !display_modus;
+  } else if (keyCode == 68) {   // letter D
+    show_duplicates = !show_duplicates;
   }
 }
 
