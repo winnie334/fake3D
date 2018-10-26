@@ -29,7 +29,7 @@ function draw() {
   background(240);
 
   textAlign(LEFT);
-  text("Controls: ←↑→ , ␣ and B", 20, height - 30)
+  text("Controls: ←↑→ and ␣", 20, height - 30)
 
   textAlign(RIGHT);
   if (!display_modus) {
@@ -156,8 +156,8 @@ function keyPressed() {
     keys[2] = true;
   } else if (keyCode === 32) {  // space
     display_modus = !display_modus;
-  } else if (keyCode === 66) {
-	honk();  
+  } else {
+	  honk();  
   }
 }
 
@@ -170,10 +170,18 @@ function keyReleased() {
     keys[0] = false;
   } else if (keyCode === DOWN_ARROW) {
     keys[2] = false;
+  } else {
+	  honk();  
   }
 }
 
+var honk_sound = new Howl({
+  src: ['car_horn.ogg'],
+  autoplay: false,
+  loop: true
+});
+var mute = true;
 function honk() { //Simple function for car honking
-	var audio = new Audio('car_horn.mp3');
-	audio.play();
+  mute ? honk_sound.play() : honk_sound.pause();
+  mute = !mute;
 }
