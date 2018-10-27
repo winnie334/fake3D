@@ -1,6 +1,5 @@
 image_amount = 24;    // Ugly, but no time to fix
 var images;
-var cursors = ['images/car_cursor.cur', 'images/penis_cursor.cur'];
 var pos = [];
 var angle = 0;
 var keys = [false, false, false, false];  // up, left, down and right arrow
@@ -23,9 +22,7 @@ function setup() {
   createCanvas(800, 800)
   pos = [300, 300];
   textSize(32);
-  var cursor_index = 0;
-  if (Math.random() > 0.9) cursor_index = 1;
-  document.body.style.cursor = 'url("' + cursors[cursor_index] + '"), auto';
+  document.body.style.cursor = 'url("images/car_cursor.cur"), auto';
 }
 
 function draw() {
