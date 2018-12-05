@@ -157,8 +157,6 @@ function keyPressed() {
     keys[2] = true;
   } else if (keyCode === 32) {  // space
     display_modus = !display_modus;
-  } else {
-	  honk();  
   }
 }
 
@@ -171,18 +169,5 @@ function keyReleased() {
     keys[0] = false;
   } else if (keyCode === DOWN_ARROW) {
     keys[2] = false;
-  } else {
-	  honk();  
   }
-}
-
-var honk_sound = new Howl({
-  src: ['car_horn.ogg'],
-  autoplay: false,
-  loop: true
-});
-var mute = true;
-function honk() { //Simple function for car honking
-  mute ? honk_sound.play() : honk_sound.pause();
-  mute = !mute;
 }
